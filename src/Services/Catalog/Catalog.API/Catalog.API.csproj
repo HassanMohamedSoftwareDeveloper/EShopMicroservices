@@ -7,10 +7,12 @@
 		<UserSecretsId>9b4a8e3e-9618-43f4-875b-ed82ce960538</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MediatR" Version="12.4.0" />
+		<PackageReference Include="Carter" Version="8.2.1" />
+		<PackageReference Include="Marten" Version="7.26.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 	</ItemGroup>
 
@@ -20,6 +22,10 @@
 		<Folder Include="Products\GetProductById\" />
 		<Folder Include="Products\GetProducts\" />
 		<Folder Include="Products\UpdateProduct\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
 	</ItemGroup>
 
 </Project>
