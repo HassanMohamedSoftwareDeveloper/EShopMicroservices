@@ -6,6 +6,7 @@ global using BuildingBlocks.CQRS;
 global using BuildingBlocks.Exceptions;
 global using BuildingBlocks.Exceptions.Handlers;
 global using Carter;
+global using Discount.Grps;
 global using FluentValidation;
 global using HealthChecks.UI.Client;
 global using Mapster;
