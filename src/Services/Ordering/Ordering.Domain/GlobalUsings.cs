@@ -1,5 +1,1 @@
-﻿namespace Ordering.API;
-
-public class GlobalUsings
-{
-}
+﻿global using MediatR;
