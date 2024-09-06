@@ -54,7 +54,7 @@ public class Order : Aggregate<OrderId>
         this.Payment = payment;
         this.Status = status;
 
-        this.AddDomainEvent(new OrderUpdatedEvent(order));
+        this.AddDomainEvent(new OrderUpdatedEvent(this));
     }
 
     public void Add(ProductId productId, int quantity, decimal price)
