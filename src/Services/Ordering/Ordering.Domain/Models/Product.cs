@@ -8,4 +8,21 @@ public class Product : Entity<ProductId>
     public decimal Price { get; private set; } = default!;
 
     #endregion PROPS :
+
+    #region Methods :
+
+    public static Product Create(ProductId id, string name, decimal price)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+        return new Product
+        {
+            Id = id,
+            Name = name,
+            Price = price
+        };
+    }
+
+    #endregion Methods :
 }

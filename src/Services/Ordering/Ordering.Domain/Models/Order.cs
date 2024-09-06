@@ -25,4 +25,53 @@ public class Order : Aggregate<OrderId>
     }
 
     #endregion PROPS :
+
+    #region Methods :
+
+    public static Order Create(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
+    {
+        var order = new Order
+        {
+            Id = id,
+            CustomerId = customerId,
+            OrderName = orderName,
+            ShippingAddress = shippingAddress,
+            BillingAddress = billingAddress,
+            Payment = payment,
+            Status = OrderStatus.Pending
+        };
+
+        order.AddDomainEvent(new OrderCreatedEvent(order));
+
+        return order;
+    }
+
+    public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+    {
+        this.OrderName = orderName;
+        this.ShippingAddress = shippingAddress;
+        this.BillingAddress = billingAddress;
+        this.Payment = payment;
+        this.Status = status;
+
+        this.AddDomainEvent(new OrderUpdatedEvent(order));
+    }
+
+    public void Add(ProductId productId, int quantity, decimal price)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+        var orderItem = new OrderItem(Id, productId, quantity, price);
+        _orderItems.Add(orderItem);
+    }
+
+    public void Remove(ProductId productId)
+    {
+        var orderItem = _orderItems.Find(x => x.ProductId == productId);
+        if (orderItem is not null)
+            _orderItems.Remove(orderItem);
+    }
+
+    #endregion Methods :
 }
