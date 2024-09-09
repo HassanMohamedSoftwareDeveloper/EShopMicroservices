@@ -2,7 +2,7 @@
 
 public static class OrderExtension
 {
-    private static List<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
+    public static List<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
     {
         return orders.Select(order => new OrderDto(
             Id: order.Id.Value,

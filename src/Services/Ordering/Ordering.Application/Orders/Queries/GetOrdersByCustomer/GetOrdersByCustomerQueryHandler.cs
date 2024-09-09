@@ -12,6 +12,6 @@ internal sealed class GetOrdersByCustomerQueryHandler(IApplicationDbContext dbCo
             .ToListAsync(cancellationToken);
 
         var orderDtos = orders.ToOrderDtoList();
-        return new Task<GetOrdersByCustomerResult>(orderDtos);
+        return new GetOrdersByCustomerResult(orderDtos);
     }
 }
