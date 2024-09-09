@@ -26,7 +26,7 @@ internal sealed class CreateOrderCommandHandler(IApplicationDbContext dbContext)
                                          orderDto.ShippingAddress.AddressLine,
                                          orderDto.ShippingAddress.Country,
                                          orderDto.ShippingAddress.State,
-                                         orderDto.ShippingAddress.State);
+                                         orderDto.ShippingAddress.ZipCode);
 
         var billingAddress = Address.Of(orderDto.BillingAddress.FirstName,
                                         orderDto.BillingAddress.LastName,
@@ -34,7 +34,7 @@ internal sealed class CreateOrderCommandHandler(IApplicationDbContext dbContext)
                                         orderDto.BillingAddress.AddressLine,
                                         orderDto.BillingAddress.Country,
                                         orderDto.BillingAddress.State,
-                                        orderDto.BillingAddress.State);
+                                        orderDto.BillingAddress.ZipCode);
 
         var payment = Payment.Of(orderDto.Payment.CardName,
                                  orderDto.Payment.CardNumber,

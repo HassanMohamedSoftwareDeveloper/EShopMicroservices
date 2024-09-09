@@ -13,7 +13,7 @@ public class UpdateOrder : ICarterModule
             var command = request.Adapt<UpdateOrderCommand>();
             var result = await sender.Send(command);
 
-            var response = result.Adapt<UpdateOrderRequest>();
+            var response = result.Adapt<UpdateOrderResponse>();
             return Results.Ok(response);
         })
             .WithName("UpdateOrder")

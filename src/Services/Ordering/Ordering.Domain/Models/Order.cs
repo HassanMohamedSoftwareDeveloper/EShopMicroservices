@@ -24,6 +24,7 @@ public class Order : Aggregate<OrderId>
         private set { }
     }
 
+
     #endregion PROPS :
 
     #region Methods :

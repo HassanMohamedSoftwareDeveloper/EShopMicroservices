@@ -32,7 +32,7 @@ internal sealed class UpdateOrderCommandHandler(IApplicationDbContext dbContext)
                                                 orderDto.ShippingAddress.AddressLine,
                                                 orderDto.ShippingAddress.Country,
                                                 orderDto.ShippingAddress.State,
-                                                orderDto.ShippingAddress.State);
+                                                orderDto.ShippingAddress.ZipCode);
 
         var updatedBillingAddress = Address.Of(orderDto.BillingAddress.FirstName,
                                                orderDto.BillingAddress.LastName,
@@ -40,7 +40,7 @@ internal sealed class UpdateOrderCommandHandler(IApplicationDbContext dbContext)
                                                orderDto.BillingAddress.AddressLine,
                                                orderDto.BillingAddress.Country,
                                                orderDto.BillingAddress.State,
-                                               orderDto.BillingAddress.State);
+                                               orderDto.BillingAddress.ZipCode);
 
         var updatedPayment = Payment.Of(orderDto.Payment.CardName,
                                         orderDto.Payment.CardNumber,
