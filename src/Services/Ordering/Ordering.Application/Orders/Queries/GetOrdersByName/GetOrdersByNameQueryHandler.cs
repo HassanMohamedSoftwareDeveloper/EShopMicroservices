@@ -11,7 +11,7 @@ internal sealed class GetOrdersByNameQueryHandler(IApplicationDbContext dbContex
              .OrderBy(o => o.OrderName.Value)
              .ToListAsync(cancellationToken);
 
-        var orderDtos = orders.ProjectToOrderDto();
+        var orderDtos = orders.ToOrderDtoList();
 
         return new GetOrdersByNameResult(orderDtos);
     }
