@@ -18,7 +18,7 @@ internal sealed class CreateOrderCommandHandler(IApplicationDbContext dbContext)
 
     #region Helpers :
 
-    private Order CreateNewOrder(OrderDto orderDto)
+    private static Order CreateNewOrder(OrderDto orderDto)
     {
         var shippingAddress = Address.Of(orderDto.ShippingAddress.FirstName,
                                          orderDto.ShippingAddress.LastName,
