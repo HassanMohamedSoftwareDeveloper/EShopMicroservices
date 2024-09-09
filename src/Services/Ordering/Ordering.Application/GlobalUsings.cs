@@ -1,1 +1,1 @@
-﻿global using Microsoft.Extensions.DependencyInjection;
+﻿global using Ordering.Domain.Enums;
