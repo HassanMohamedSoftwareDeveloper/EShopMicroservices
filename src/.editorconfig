@@ -18,7 +18,7 @@ csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 csharp_space_around_binary_operators = before_and_after
 vsspell_section_id = 07bb515974284236ad05972647ddedcc
-vsspell_ignored_words_07bb515974284236ad05972647ddedcc = app|Grpc
+vsspell_ignored_words_07bb515974284236ad05972647ddedcc = app|Grpc|Dto
 
 [*.{cs,vb}]
 #### Naming styles ####
