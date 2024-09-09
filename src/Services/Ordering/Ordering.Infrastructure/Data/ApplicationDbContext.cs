@@ -1,6 +1,6 @@
 ﻿namespace Ordering.Infrastructure.Data;
 
-internal class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+internal class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IApplicationDbContext
 {
     #region PROPS :
 
