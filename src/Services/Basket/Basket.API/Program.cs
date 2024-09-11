@@ -1,3 +1,5 @@
+using BuildingBlocks.Messaging.MassTransit;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCarter();
@@ -41,6 +43,8 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
         };
         return handler;
     });
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
