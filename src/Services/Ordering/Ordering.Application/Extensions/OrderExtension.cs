@@ -2,9 +2,25 @@
 
 public static class OrderExtension
 {
+    #region Methods :
+
     public static List<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
     {
-        return orders.Select(order => new OrderDto(
+        return orders.Select(DtoFromOrder).ToList();
+    }
+
+    public static OrderDto ToOrderDto(this Order order)
+    {
+        return order.DtoFromOrder();
+    }
+
+    #endregion Methods :
+
+    #region Helpers :
+
+    private static OrderDto DtoFromOrder(this Order order)
+    {
+        return new OrderDto(
             Id: order.Id.Value,
             CustomerId: order.CustomerId.Value,
             OrderName: order.OrderName.Value,
@@ -31,7 +47,8 @@ public static class OrderExtension
             OrderItems: order.OrderItems.Select(orderItem => new OrderItemDto(orderItem.OrderId.Value,
                                                                               orderItem.ProductId.Value,
                                                                               orderItem.Quantity,
-                                                                              orderItem.Price)).ToList()))
-            .ToList();
+                                                                              orderItem.Price)).ToList());
     }
+
+    #endregion Helpers :
 }
