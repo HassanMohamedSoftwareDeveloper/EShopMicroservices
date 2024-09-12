@@ -8,9 +8,11 @@
         "basketdb": "StartWithoutDebugging",
         "distributedcache": "StartWithoutDebugging",
         "orderdb": "StartWithoutDebugging",
+        "messagebroker": "StartWithoutDebugging",
         "catalog.api": "StartWithoutDebugging",
         "basket.api": "StartWithoutDebugging",
-        "discount.grpc": "StartWithoutDebugging"
+        "discount.grpc": "StartWithoutDebugging",
+        "ordering.api": "StartWithoutDebugging"
       }
     }
   }
