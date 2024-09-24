@@ -153,3 +153,33 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+        - xpack.security.enabled=false
+        - xpack.monitoring.templates.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
+        # - ELASTIC_USERNAME=elastic
+        # - ELASTIC_PASSWORD=elastic
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+
+
+  kibana:
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+      # - ELASTICSEARCH_USERNAME=elastic
+      # - ELASTICSEARCH_PASSWORD=elastic
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+
