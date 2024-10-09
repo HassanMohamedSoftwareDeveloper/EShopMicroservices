@@ -22,7 +22,7 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
 
     #region Helpers :
 
-    private void UpdateEntities(DbContext? context)
+    private static void UpdateEntities(DbContext? context)
     {
         if (context is null) return;
 
