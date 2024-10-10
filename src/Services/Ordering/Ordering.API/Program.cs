@@ -1,5 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using BuildingBlocks.Logging;
+using Serilog;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog(SeriLogger.Configure);
 builder.Services
     .AddApplicationServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration)

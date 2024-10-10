@@ -1,5 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using BuildingBlocks.Logging;
+using Serilog;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog(SeriLogger.Configure);
 builder.Services.AddGrpc();
 
 builder.Services.AddDbContext<DiscountContext>(opts => opts.UseSqlite(builder.Configuration.GetConnectionString("Database")!));

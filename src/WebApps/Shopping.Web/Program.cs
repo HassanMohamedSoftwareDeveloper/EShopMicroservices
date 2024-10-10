@@ -7,6 +7,8 @@ builder.Host.UseSerilog(SeriLogger.Configure);
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddTransient<LoggingDelegatingHandler>();
+
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c =>
     {

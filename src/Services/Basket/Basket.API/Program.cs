@@ -1,7 +1,9 @@
+using BuildingBlocks.Logging;
 using BuildingBlocks.Messaging.MassTransit;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseSerilog(SeriLogger.Configure);
 builder.Services.AddCarter();
 
 builder.Services.AddMediatR(config =>
