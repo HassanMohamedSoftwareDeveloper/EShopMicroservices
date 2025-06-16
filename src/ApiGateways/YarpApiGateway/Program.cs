@@ -1,4 +1,6 @@
 using BuildingBlocks.Logging;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 
@@ -16,11 +18,16 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
         options.PermitLimit = 5;
     });
 });
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
 app.UseRateLimiter();
 
 app.MapReverseProxy();
-
+app.MapHealthChecks("/hc", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 await app.RunAsync();
