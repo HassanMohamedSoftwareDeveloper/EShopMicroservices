@@ -60,10 +60,17 @@ services:
     image: docker.elastic.co/kibana/kibana:8.15.1
 
 
+  shopping.webstatus:
+    image: ${DOCKER_REGISTRY-}shoppingwebstatus
+    build:
+      context: .
+      dockerfile: WebApps/Shopping.WebStatus/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
   elasticsearch_data:
+
 
 
 

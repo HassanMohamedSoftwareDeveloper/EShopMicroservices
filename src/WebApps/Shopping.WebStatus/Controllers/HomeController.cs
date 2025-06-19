@@ -9,6 +9,7 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     public IActionResult Index()
     {
         return Redirect("/healthchecks-ui");
+        //return View();
     }
 
     public IActionResult Privacy()

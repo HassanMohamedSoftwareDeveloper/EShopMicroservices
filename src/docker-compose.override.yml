@@ -189,3 +189,25 @@ services:
     ports:
       - "5601:5601"
 
+
+  shopping.webstatus:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - HealthChecks-UI__HealthChecks__0__Name=Basket Health Check
+      - HealthChecks-UI__HealthChecks__0__Uri=http://basket.api:8080/hc
+      - HealthChecks-UI__HealthChecks__1__Name=Catalog Health Check
+      - HealthChecks-UI__HealthChecks__1__Uri=http://catalog.api:8080/hc
+      - HealthChecks-UI__HealthChecks__2__Name=Gateway Health Check
+      - HealthChecks-UI__HealthChecks__2__Uri=http://yarpapigateway:8080/hc 
+  
+    ports:
+      - "6006:8080"
+      - "6066:8081"
+    depends_on:
+     - yarpapigateway
+     - basket.api 
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
