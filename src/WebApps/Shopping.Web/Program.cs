@@ -1,4 +1,6 @@
 using BuildingBlocks.Logging;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,16 @@ builder.Services.AddRefitClient<IOrderingService>()
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
     }).AddHttpMessageHandler<LoggingDelegatingHandler>();
 
+builder.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("Shopping.Web"))
+    .WithTracing(tracing =>
+    {
+        tracing.AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+
+        tracing.AddOtlpExporter();
+    });
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

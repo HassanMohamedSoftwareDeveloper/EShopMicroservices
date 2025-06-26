@@ -58,8 +58,10 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
     depends_on:
       - catalogdb
+      - shopping-jaeger
     ports:
       - "6000:8080"
       - "6060:8081"
@@ -79,12 +81,14 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
 
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
       - messagebroker
+      - shopping-jaeger
     ports:
       - "6001:8080"
       - "6061:8081"
@@ -99,6 +103,11 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Data Source=discountdb
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
+
+    depends_on:
+      - shopping-jaeger
+
     ports:
       - "6002:8080"
       - "6062:8081"
@@ -117,9 +126,12 @@ services:
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=true
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
     depends_on:
       - orderdb
       - messagebroker
+      - shopping-jaeger
+
     ports:
       - "6003:8080"
       - "6063:8081"
@@ -133,10 +145,12 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
     depends_on:
       - catalog.api
       - basket.api
       - ordering.api
+      - shopping-jaeger
     ports:
       - "6004:8080"
       - "6064:8081"
@@ -151,8 +165,10 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ApiSettings__GatewayAddress=http://yarpapigateway:8080
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://shopping-jaeger:4317
     depends_on:
       - yarpapigateway
+      - shopping-jaeger
     ports:
       - "6005:8080"
       - "6065:8081"
@@ -211,3 +227,10 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  shopping-jaeger:
+    container_name: shopping-jaeger
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "16686:16686"

@@ -1,5 +1,9 @@
 using BuildingBlocks.Logging;
 using BuildingBlocks.Messaging.MassTransit;
+using Npgsql;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +25,6 @@ builder.Services.AddMarten(opts =>
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
-
-//builder.Services.AddScoped<IBasketRepository>(provider =>
-//{
-//    var basketRepository = provider.GetRequiredService<IBasketRepository>();
-//    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
-//});
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -53,6 +51,30 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!)
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+
+builder.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("Basket.API"))
+    .WithTracing(tracing =>
+    {
+        tracing.AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddSqlClientInstrumentation(o => o.SetDbStatementForText = true)
+            .AddEntityFrameworkCoreInstrumentation()
+            .AddNpgsql()
+            .AddRedisInstrumentation()
+            .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName);
+
+        tracing.AddOtlpExporter();
+    });
+
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+
+    logging.AddOtlpExporter();
+});
 
 var app = builder.Build();
 

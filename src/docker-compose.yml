@@ -66,6 +66,10 @@ services:
       context: .
       dockerfile: WebApps/Shopping.WebStatus/Dockerfile
 
+  shopping-jaeger:
+    image: jaegertracing/all-in-one:latest
+
+
 volumes:
   postgres_catalog:
   postgres_basket:
